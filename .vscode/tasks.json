@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake: 编译",
+      "type": "cmake",
+      "command": "build",
+      "targets": [
+        "all"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "DAPLink: 烧录",
+      "type": "cmake",
+      "command": "build",
+      "targets": [
+        "flash_daplink"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "dependsOn": [
+        "CMake: 编译"
+      ]
+    }
+  ]
+}

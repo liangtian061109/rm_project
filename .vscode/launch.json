@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "OpenOCD: 烧录并调试 (ST-LINK)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/Debug/uart.elf",
+            "device": "STM32F407VE",
+            "servertype": "openocd",
+            "serverpath": "D:/TI/tools/openocd/bin/openocd.exe",
+            "searchDir": [
+                "D:/TI/tools/openocd/share/openocd/scripts"
+            ],
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f4x.cfg"
+            ],
+            "runToEntryPoint": "main",
+            "preLaunchTask": "CMake: 编译"
+        },
+        {
+        "name": "OpenOCD: 烧录并调试 (DAPLink)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/Debug/uart.elf",
+            "device": "STM32F407VE",
+            "servertype": "openocd",
+            "serverpath": "D:/TI/tools/openocd/bin/openocd.exe",
+            "searchDir": [
+                "D:/TI/tools/openocd/share/openocd/scripts"
+            ],
+            "configFiles": [
+                "interface/cmsis-dap.cfg",
+                "target/stm32f4x.cfg"
+            ],
+            "runToEntryPoint": "main",
+            "preLaunchTask": "CMake: 编译"
+        }
+    ]
+}
