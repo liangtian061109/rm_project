@@ -29,7 +29,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Chassis.h"
-#include "Emm_V5.h"
 #include "app_init.h"
 #include "bsp_can.h"
 #include "bsp_uart.h"
@@ -87,29 +86,7 @@ void UART_Setup(void) {
   uart1 = UART_Register(&uart_conf); // 注册(内部会注册 DMA 实例)
   UART_Receive(uart1);               // 启动接收
 }
-/*CAN的注册*/
-void CAN_Setup(void) {
-  CAN_Init_Config_s can_conf = {
-      .handle = &hcan1,
-      .filter.FilterBank = 0,
-      .filter.FilterMode = CAN_FILTERMODE_IDMASK,
-      .filter.FilterScale = CAN_FILTERSCALE_32BIT,
-      .filter.FilterIdHigh = 0x0000,
-      .filter.FilterIdLow = 0x0000,
-      .filter.FilterMaskIdHigh = 0x0000,
-      .filter.FilterMaskIdLow = 0x0000,
-      .filter.FilterFIFOAssignment = CAN_FILTER_FIFO0,
-      .filter.FilterActivation = ENABLE,
-      /* 0~13号滤波器归CAN1，14~27号滤波器归CAN2。 */
-      .filter.SlaveStartFilterBank = 14,
-      .rx_callback = Emm_V5_RxCallback,
-      .id = NULL,
-  };
-  CAN_Instance *can_instance =
-      CAN_Register(&can_conf); // 注册(内部会注册 CAN 实例)
-  CAN_Start(can_instance);     // 启动 CAN 接收中断
-  can_inst = can_instance;     // 存到全局,Emm_V5 模块要用
-}
+
 
 /* USER CODE END 0 */
 
@@ -153,8 +130,7 @@ int main(void)
    * 用调试器读 App_Get_Status() 可以看失败在哪一步。 */
   HAL_Delay(200);
   App_Init();   // OLED APP:注册 -> 初始化 -> 显示首帧
-  UART_Setup(); // UART 注册(标定期用串口输出位置)
-  CAN_Setup();  // CAN 注册
+  UART_Setup(); // UART 注册(标定期用串口输出位置)  
   // Emm_V5_Init(can_inst); // 把 CAN 实例交给电机模块
 
   // Chassis_Init();
